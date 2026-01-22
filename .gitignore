@@ -1,0 +1,112 @@
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Dependencies
+node_modules/
+vendor/
+target/
+*.pyc
+__pycache__/
+*.egg-info/
+dist/
+build/
+.Python
+venv/
+env/
+ENV/
+
+# Build outputs
+*.class
+*.jar
+*.war
+*.ear
+*.exe
+*.dll
+*.so
+*.dylib
+*.o
+*.a
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.env
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Kubernetes secrets
+*secret*.yaml
+*-secrets.yaml
+
+# Minikube
+.minikube/
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Coverage
+coverage/
+.coverage
+*.cover
+htmlcov/
+.pytest_cache/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup
+
+# Docker
+.dockerignore
+
+# Credentials
+credentials.json
+service-account*.json
+*.pem
+*.key
+!**/*.key.example
+
+# IDE specific
+.vscode/
+.idea/
+*.iml
+
+# Go
+go.sum
+
+# Java
+.classpath
+.project
+.settings/
+
+# Python
+*.py[cod]
+*.pyo
+.mypy_cache/
+.dmypy.json
+dmypy.json
