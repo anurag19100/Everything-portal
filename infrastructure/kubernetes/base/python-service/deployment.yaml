@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-service
+  labels:
+    app: python-service
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: python-service
+  template:
+    metadata:
+      labels:
+        app: python-service
+        version: v1
+    spec:
+      containers:
+      - name: python-service
+        image: python-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8082
+          name: http
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: MONGODB_URL
+          value: "mongodb://mongodb:27017"
+        - name: MONGODB_DB_NAME
+          value: "python_service"
+        - name: POSTGRES_URL
+          value: "postgresql://postgres:postgres@postgresql:5432/python_db"
+        - name: POSTGRES_HOST
+          value: "postgresql"
+        - name: POSTGRES_PORT
+          value: "5432"
+        - name: POSTGRES_USER
+          value: "postgres"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: password
+        - name: POSTGRES_DB
+          value: "python_db"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /api/python/health/live
+            port: 8082
+          initialDelaySeconds: 40
+          periodSeconds: 30
+          timeoutSeconds: 3
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/python/health/ready
+            port: 8082
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3

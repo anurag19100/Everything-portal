@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: secondary-ui
+  labels:
+    app: secondary-ui
+    service: secondary-ui
+spec:
+  ports:
+  - port: 3001
+    targetPort: 3001
+    protocol: TCP
+    name: http
+  selector:
+    app: secondary-ui
+  type: ClusterIP

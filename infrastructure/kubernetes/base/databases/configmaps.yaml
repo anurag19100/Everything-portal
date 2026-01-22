@@ -1,0 +1,45 @@
+# Database Initialization ConfigMaps
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgresql-init
+data:
+  01-init-databases.sql: |
+    -- Create databases for services
+    CREATE DATABASE IF NOT EXISTS java_db;
+    CREATE DATABASE IF NOT EXISTS python_db;
+
+    -- Grant permissions
+    GRANT ALL PRIVILEGES ON DATABASE java_db TO postgres;
+    GRANT ALL PRIVILEGES ON DATABASE python_db TO postgres;
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-init
+data:
+  01-init-database.sql: |
+    -- Create database for Go service
+    CREATE DATABASE IF NOT EXISTS go_service;
+
+    -- Grant permissions
+    GRANT ALL PRIVILEGES ON go_service.* TO 'root'@'%';
+    FLUSH PRIVILEGES;
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-init
+data:
+  01-init-database.js: |
+    // Create database and collections for Python service
+    db = db.getSiblingDB('python_service');
+
+    // Create collections
+    db.createCollection('data_items');
+    db.createCollection('ml_models');
+
+    // Create indexes
+    db.data_items.createIndex({ "created_at": -1 });
+    db.data_items.createIndex({ "name": 1 });

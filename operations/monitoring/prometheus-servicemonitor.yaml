@@ -1,0 +1,48 @@
+# ServiceMonitor for scraping application metrics
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: everything-portal-services
+  namespace: default
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      monitored: "true"
+  endpoints:
+  - port: http
+    interval: 30s
+    path: /metrics
+---
+# Java Service - Actuator metrics
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-service-metrics
+  labels:
+    app: java-service
+    monitored: "true"
+spec:
+  ports:
+  - name: metrics
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: java-service
+---
+# Python Service - Prometheus metrics
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-service-metrics
+  labels:
+    app: python-service
+    monitored: "true"
+spec:
+  ports:
+  - name: metrics
+    port: 8082
+    targetPort: 8082
+  selector:
+    app: python-service

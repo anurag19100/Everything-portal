@@ -1,0 +1,62 @@
+{
+  "dashboard": {
+    "title": "Everything Portal - Service Overview",
+    "tags": ["microservices", "istio"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "title": "Service Request Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(rate(istio_requests_total[5m])) by (destination_service_name)",
+            "legendFormat": "{{destination_service_name}}"
+          }
+        ]
+      },
+      {
+        "title": "Service Error Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(rate(istio_requests_total{response_code=~\"5..\"}[5m])) by (destination_service_name)",
+            "legendFormat": "{{destination_service_name}}"
+          }
+        ]
+      },
+      {
+        "title": "Service Latency (P95)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, sum(rate(istio_request_duration_milliseconds_bucket[5m])) by (destination_service_name, le))",
+            "legendFormat": "{{destination_service_name}}"
+          }
+        ]
+      },
+      {
+        "title": "Pod CPU Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"default\"}[5m])) by (pod)",
+            "legendFormat": "{{pod}}"
+          }
+        ]
+      },
+      {
+        "title": "Pod Memory Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(container_memory_working_set_bytes{namespace=\"default\"}) by (pod)",
+            "legendFormat": "{{pod}}"
+          }
+        ]
+      }
+    ],
+    "refresh": "30s",
+    "schemaVersion": 16,
+    "version": 1
+  }
+}

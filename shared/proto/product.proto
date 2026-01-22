@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package everythingportal.product;
+
+option java_multiple_files = true;
+option java_package = "com.everythingportal.grpc.product";
+option java_outer_classname = "ProductProto";
+
+// Product service definition
+service ProductService {
+  // Get a single product
+  rpc GetProduct(GetProductRequest) returns (ProductResponse);
+
+  // List all products
+  rpc ListProducts(ListProductsRequest) returns (ListProductsResponse);
+
+  // Create a new product
+  rpc CreateProduct(CreateProductRequest) returns (ProductResponse);
+
+  // Update a product
+  rpc UpdateProduct(UpdateProductRequest) returns (ProductResponse);
+
+  // Delete a product
+  rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse);
+}
+
+// Product message
+message Product {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  int32 quantity = 5;
+  bool active = 6;
+  int64 created_at = 7;
+  int64 updated_at = 8;
+}
+
+// Request/Response messages
+message GetProductRequest {
+  int64 id = 1;
+}
+
+message ListProductsRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+  bool active_only = 3;
+}
+
+message ListProductsResponse {
+  repeated Product products = 1;
+  int32 total_count = 2;
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+message CreateProductRequest {
+  string name = 1;
+  string description = 2;
+  double price = 3;
+  int32 quantity = 4;
+  bool active = 5;
+}
+
+message UpdateProductRequest {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  int32 quantity = 5;
+  bool active = 6;
+}
+
+message DeleteProductRequest {
+  int64 id = 1;
+}
+
+message DeleteProductResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ProductResponse {
+  Product product = 1;
+}
