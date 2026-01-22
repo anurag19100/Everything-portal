@@ -2,6 +2,21 @@
 
 A production-ready microservices architecture with Istio service mesh, running on Minikube.
 
+## 🚀 Quick Start
+
+Deploy everything with one command:
+
+```bash
+./startup.sh
+```
+
+See **[QUICKSTART.md](QUICKSTART.md)** for detailed quick start guide.
+
+**Already deployed?** Test your deployment:
+```bash
+./test-deployment.sh
+```
+
 ## Architecture Overview
 
 This project implements a full-stack microservices application with:
